@@ -1,0 +1,35 @@
+[plugins]
+fnox-env = "https://github.com/jdx/mise-env-fnox"
+
+[tools]
+fnox = "latest"
+java = "jetbrains-25"
+node = "26"
+
+[env]
+_.fnox-env = { tools = true }
+
+[tasks.feInit]
+description = "Initialize Vite React TypeScript project"
+run = """
+npm create vite@latest frontend -- --template react-ts --no-interactive
+"""
+
+[tasks.feTailwind]
+description = "Install and configure Tailwind CSS"
+depends = ["feInit"]
+run = """
+cd frontend && npm add -D tailwindcss @tailwindcss/vite
+"""
+
+[tasks.feTest]
+description = "Install unit testing libraries"
+depends = ["feTailwind"]
+run = """
+cd frontend && npm add -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
+"""
+
+[tasks.feSetup]
+description = "Full frontend setup"
+depends = ["feInit", "feTailwind", "feTest"]
+run = "echo 'Frontend setup completed'"
