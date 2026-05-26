@@ -33,3 +33,15 @@ cd frontend && npm add -D vitest jsdom @testing-library/react @testing-library/j
 description = "Full frontend setup"
 depends = ["feInit", "feTailwind", "feTest"]
 run = "echo 'Frontend setup completed'"
+
+[tasks.fe]
+description = "Start frontend dev server"
+run = "cd frontend && npm run dev"
+
+[tasks.be]
+description = "Start backend dev server"
+run = "cd backend && ./gradlew bootRun"
+
+[tasks.dev]
+description = "Start frontend and backend dev servers"
+depends = ["fe", "be"]
