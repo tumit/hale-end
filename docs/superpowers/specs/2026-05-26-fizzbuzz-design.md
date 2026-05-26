@@ -122,7 +122,7 @@ Invalid input (e.g. n = -1):
 
 **Backend:**
 - `FizzBuzzTest.java` — plain JUnit 5 + AssertJ. No Spring context. Tests pure `compute()` directly: n=1, n=3, n=5, n=15, edge cases.
-- `FizzBuzzControllerTest.java` — `@WebMvcTest` slice + JsonUnit AssertJ assertions. Tests HTTP layer: valid request returns correct JSON shape, invalid request returns RFC 9457 ProblemDetail shape (status, detail fields).
+- `FizzBuzzControllerTest.java` — `@WebMvcTest` slice + JsonUnit AssertJ assertions. Tests HTTP layer: valid request returns correct JSON shape, invalid request returns RFC 9457 ProblemDetail shape (status, detail fields). JSON strings written as Java text blocks (`"""`). 
 
 **Frontend:**
 - `FizzBuzzPage.test.tsx` — Vitest + Testing Library. Tests: renders form, submits and shows result, shows error message on failure.
