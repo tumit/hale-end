@@ -27,9 +27,12 @@ dependencies {
 	implementation 'org.springframework.modulith:spring-modulith-starter-core'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testImplementation('org.springframework.boot:spring-boot-starter-webmvc-test') {
+		exclude group: 'com.vaadin.external.google', module: 'android-json'
+	}
 	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
 	testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:3.4.1'
+	testImplementation 'org.json:json:20250107'
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
@@ -39,6 +42,10 @@ dependencyManagement {
 	imports {
 		mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
 	}
+}
+
+configurations.all {
+	exclude group: 'com.vaadin.external.google', module: 'android-json'
 }
 
 tasks.named('test') {
