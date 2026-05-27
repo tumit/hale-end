@@ -1,11 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 
+type HealthStatus = 'loading' | 'up' | 'down' | 'error'
+
 function App() {
   const [count, setCount] = useState(0)
+  const [health, setHealth] = useState<HealthStatus>('loading')
+
+  useEffect(() => {
+    fetch('/actuator/health')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 'UP') {
+          setHealth('up')
+        } else {
+          setHealth('down')
+        }
+      })
+      .catch(() => setHealth('error'))
+  }, [])
 
   return (
     <>
@@ -115,6 +131,14 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+
+      <footer className="footer">
+        <span
+          className={`badge ${health === 'up' ? 'badge-success' : health === 'down' || health === 'error' ? 'badge-error' : 'loading loading-spinner loading-xs'}`}
+        >
+          {health === 'loading' ? '' : `Backend ${health}`}
+        </span>
+      </footer>
     </>
   )
 }
